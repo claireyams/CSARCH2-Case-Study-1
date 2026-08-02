@@ -43,6 +43,7 @@ CSArch_CaseStudy1/
 |-- simulator.js          | cache simulation logic and UI behavior
 |-- README.md             | project documentation
 |-- assets/
+|   |--screenshots/
 |-- images/
 ```
 
