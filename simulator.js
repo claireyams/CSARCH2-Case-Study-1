@@ -60,12 +60,11 @@ function simulate(seq, blocks, blockSize, policy, readPolicy) {
   let stamp = 0;
   const steps = [];
 
-  // load-through: the CPU only waits for the requested word, which is forwarded
-  // straight to it, so neither the rest of the block transfer nor a final cache
-  // read is part of the penalty the CPU sees
+  // load-through: the requested word is fetched first, so the CPU waits for one
+  // word plus the cache access that delivers it, not for the whole block transfer
   const missTime =
     readPolicy === 'lt'
-      ? CACHE_T + MEM_T
+      ? CACHE_T + MEM_T + CACHE_T
       : CACHE_T + MEM_T * blockSize + CACHE_T;
 
   for (let i = 0; i < seq.length; i++) {
