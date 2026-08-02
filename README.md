@@ -43,8 +43,8 @@ CSArch_CaseStudy1/
 |-- simulator.js          | cache simulation logic and UI behavior
 |-- README.md             | project documentation
 |-- assets/
-|   |--screenshots/
 |-- images/
+|   |--screenshots/
 ```
 
 No build step or server is needed. Clone the repo and open `index.html`
