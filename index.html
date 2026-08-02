@@ -31,6 +31,116 @@
     </p>
     <a class="cta" href="simulator.html">Open the simulator</a>
   </div>
+
+  <div class="hero-visual" aria-hidden="true">
+
+    <svg class="chip-svg chip-back" viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg">
+      <g class="chip-pins">
+        <rect x="44" y="46"  width="16" height="8" style="animation-delay:0s"/>
+        <rect x="44" y="68"  width="16" height="8" style="animation-delay:.15s"/>
+        <rect x="44" y="90"  width="16" height="8" style="animation-delay:.3s"/>
+        <rect x="44" y="112" width="16" height="8" style="animation-delay:.45s"/>
+        <rect x="44" y="134" width="16" height="8" style="animation-delay:.6s"/>
+        <rect x="44" y="156" width="16" height="8" style="animation-delay:.75s"/>
+        <rect x="44" y="178" width="16" height="8" style="animation-delay:.9s"/>
+        <rect x="44" y="200" width="16" height="8" style="animation-delay:1.05s"/>
+        <rect x="180" y="46"  width="16" height="8" style="animation-delay:.1s"/>
+        <rect x="180" y="68"  width="16" height="8" style="animation-delay:.25s"/>
+        <rect x="180" y="90"  width="16" height="8" style="animation-delay:.4s"/>
+        <rect x="180" y="112" width="16" height="8" style="animation-delay:.55s"/>
+        <rect x="180" y="134" width="16" height="8" style="animation-delay:.7s"/>
+        <rect x="180" y="156" width="16" height="8" style="animation-delay:.85s"/>
+        <rect x="180" y="178" width="16" height="8" style="animation-delay:1s"/>
+        <rect x="180" y="200" width="16" height="8" style="animation-delay:1.15s"/>
+        <rect x="76"  y="22" width="8" height="18" style="animation-delay:.2s"/>
+        <rect x="100" y="22" width="8" height="18" style="animation-delay:.5s"/>
+        <rect x="132" y="22" width="8" height="18" style="animation-delay:.35s"/>
+        <rect x="156" y="22" width="8" height="18" style="animation-delay:.65s"/>
+        <rect x="76"  y="220" width="8" height="18" style="animation-delay:.8s"/>
+        <rect x="100" y="220" width="8" height="18" style="animation-delay:1.1s"/>
+        <rect x="132" y="220" width="8" height="18" style="animation-delay:.95s"/>
+        <rect x="156" y="220" width="8" height="18" style="animation-delay:1.25s"/>
+      </g>
+
+      <rect class="chip-body" x="60" y="40" width="120" height="180"/>
+      <text class="chip-label" x="120" y="63" text-anchor="middle">LRU</text>
+      <text class="chip-sub"   x="120" y="76" text-anchor="middle">8-WAY CACHE</text>
+
+      <g class="chip-ways">
+        <rect class="way" x="71"  y="92" width="20" height="20" style="animation-delay:.2s"/>
+        <rect class="way" x="97"  y="92" width="20" height="20" style="animation-delay:.55s"/>
+        <rect class="way" x="123" y="92" width="20" height="20" style="animation-delay:.9s"/>
+        <rect class="way" x="149" y="92" width="20" height="20" style="animation-delay:1.25s"/>
+        <rect class="way" x="71"  y="120" width="20" height="20" style="animation-delay:1.6s"/>
+        <rect class="way" x="97"  y="120" width="20" height="20" style="animation-delay:1.95s"/>
+        <rect class="way" x="123" y="120" width="20" height="20" style="animation-delay:2.3s"/>
+        <rect class="way" x="149" y="120" width="20" height="20" style="animation-delay:2.65s"/>
+      </g>
+
+      <text class="chip-sub" x="120" y="165" text-anchor="middle">SET 0</text>
+      <line class="chip-rule" x1="71" y1="174" x2="169" y2="174"/>
+      <text class="chip-sub chip-faint" x="120" y="192" text-anchor="middle">LEAST RECENT</text>
+      <text class="chip-sub chip-faint" x="120" y="206" text-anchor="middle">EVICTED FIRST</text>
+
+      <circle class="chip-pulse">
+        <animateMotion dur="2.2s" repeatCount="indefinite" path="M 16 90 H 60"/>
+      </circle>
+    </svg>
+
+    <svg class="chip-svg chip-front" viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg">
+      <g class="chip-pins">
+        <rect x="44" y="46"  width="16" height="8" style="animation-delay:.05s"/>
+        <rect x="44" y="68"  width="16" height="8" style="animation-delay:.2s"/>
+        <rect x="44" y="90"  width="16" height="8" style="animation-delay:.35s"/>
+        <rect x="44" y="112" width="16" height="8" style="animation-delay:.5s"/>
+        <rect x="44" y="134" width="16" height="8" style="animation-delay:.65s"/>
+        <rect x="44" y="156" width="16" height="8" style="animation-delay:.8s"/>
+        <rect x="44" y="178" width="16" height="8" style="animation-delay:.95s"/>
+        <rect x="44" y="200" width="16" height="8" style="animation-delay:1.1s"/>
+        <rect x="180" y="46"  width="16" height="8" style="animation-delay:.15s"/>
+        <rect x="180" y="68"  width="16" height="8" style="animation-delay:.3s"/>
+        <rect x="180" y="90"  width="16" height="8" style="animation-delay:.45s"/>
+        <rect x="180" y="112" width="16" height="8" style="animation-delay:.6s"/>
+        <rect x="180" y="134" width="16" height="8" style="animation-delay:.75s"/>
+        <rect x="180" y="156" width="16" height="8" style="animation-delay:.9s"/>
+        <rect x="180" y="178" width="16" height="8" style="animation-delay:1.05s"/>
+        <rect x="180" y="200" width="16" height="8" style="animation-delay:1.2s"/>
+        <rect x="76"  y="22" width="8" height="18" style="animation-delay:.25s"/>
+        <rect x="100" y="22" width="8" height="18" style="animation-delay:.55s"/>
+        <rect x="132" y="22" width="8" height="18" style="animation-delay:.4s"/>
+        <rect x="156" y="22" width="8" height="18" style="animation-delay:.7s"/>
+        <rect x="76"  y="220" width="8" height="18" style="animation-delay:.85s"/>
+        <rect x="100" y="220" width="8" height="18" style="animation-delay:1.15s"/>
+        <rect x="132" y="220" width="8" height="18" style="animation-delay:1s"/>
+        <rect x="156" y="220" width="8" height="18" style="animation-delay:1.3s"/>
+      </g>
+
+      <rect class="chip-body" x="60" y="40" width="120" height="180"/>
+      <text class="chip-label" x="120" y="63" text-anchor="middle">MRU</text>
+      <text class="chip-sub"   x="120" y="76" text-anchor="middle">8-WAY CACHE</text>
+
+      <g class="chip-ways">
+        <rect class="way" x="71"  y="92" width="20" height="20" style="animation-delay:0s"/>
+        <rect class="way" x="97"  y="92" width="20" height="20" style="animation-delay:.35s"/>
+        <rect class="way" x="123" y="92" width="20" height="20" style="animation-delay:.7s"/>
+        <rect class="way" x="149" y="92" width="20" height="20" style="animation-delay:1.05s"/>
+        <rect class="way" x="71"  y="120" width="20" height="20" style="animation-delay:1.4s"/>
+        <rect class="way" x="97"  y="120" width="20" height="20" style="animation-delay:1.75s"/>
+        <rect class="way" x="123" y="120" width="20" height="20" style="animation-delay:2.1s"/>
+        <rect class="way" x="149" y="120" width="20" height="20" style="animation-delay:2.45s"/>
+      </g>
+
+      <text class="chip-sub" x="120" y="165" text-anchor="middle">SET 0</text>
+      <line class="chip-rule" x1="71" y1="174" x2="169" y2="174"/>
+      <text class="chip-sub chip-faint" x="120" y="192" text-anchor="middle">MOST RECENT</text>
+      <text class="chip-sub chip-faint" x="120" y="206" text-anchor="middle">EVICTED FIRST</text>
+
+      <circle class="chip-pulse chip-pulse-b">
+        <animateMotion dur="2.6s" repeatCount="indefinite" path="M 224 170 H 180"/>
+      </circle>
+    </svg>
+
+  </div>
 </section>
 
 <h2 class="section-label">How to use it</h2>

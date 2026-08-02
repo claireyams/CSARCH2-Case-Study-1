@@ -67,10 +67,10 @@ body::before {
 
 .wrap {
   width: 100%;
-  max-width: none;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 28px 28px 60px;
-  animation: pixel-in 0.4s steps(4) both;
+  padding: 58px 40px;
+  animation: pixel-in 0.5s ease-out both;
 }
 
 @keyframes pixel-in {
@@ -483,7 +483,7 @@ a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
   border: 3px solid var(--line2);
   border-radius: 0;
   padding: 12px;
-  height: 280px;
+  height: 255px;
   overflow: auto;
   font-family: var(--mono);
   font-size: 1.02rem;
@@ -533,10 +533,17 @@ td.win { color: var(--hit); }
 
 /* ---------- hero ---------- */
 .hero {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 54px;
   padding: 40px 0 34px;
   border-bottom: 3px dashed var(--line);
   margin-bottom: 32px;
 }
+
+.hero-copy { flex: 1 1 640px; max-width: 760px; }
 .hero h1 {
   font-family: var(--disp);
   font-size: 1.18rem;
@@ -578,6 +585,117 @@ td.win { color: var(--hit); }
 }
 @keyframes blink { 50% { opacity: 0; } }
 
+/* ---------- hero chip visual ---------- */
+.hero-visual {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.chip-svg {
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(6px 6px 0 var(--shadow));
+  animation: chip-float 4.2s ease-in-out infinite;
+}
+
+.chip-back {
+  width: 260px;
+  margin-right: -102px;
+  margin-bottom: 20px;
+  opacity: 0.82;
+  transform: rotate(-5deg);
+  z-index: 1;
+  position: relative;
+  animation-duration: 4.7s;
+}
+
+.chip-front {
+  width: 300px;
+  transform: rotate(4deg);
+  z-index: 2;
+  position: relative;
+}
+
+.chip-back .chip-label { fill: var(--blue); }
+.chip-front .chip-label { fill: var(--amber); }
+
+@media (max-width: 560px) {
+  .chip-back { width: 200px; margin-right: -74px; margin-bottom: 22px; }
+  .chip-front { width: 240px; }
+}
+
+@keyframes chip-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
+}
+
+.chip-body {
+  fill: var(--panel);
+  stroke: var(--line);
+  stroke-width: 3;
+}
+
+.chip-pins rect {
+  fill: var(--faint);
+  animation: chip-pin 2.4s ease-in-out infinite;
+}
+
+@keyframes chip-pin {
+  0%, 100% { fill: var(--faint); }
+  50%      { fill: var(--blue); }
+}
+
+.chip-label {
+  font-family: var(--disp);
+  font-size: 11px;
+  fill: var(--amber);
+}
+
+.chip-sub {
+  font-family: var(--disp);
+  font-size: 6px;
+  letter-spacing: 0.06em;
+  fill: var(--muted);
+}
+
+.chip-sub.chip-faint { fill: var(--faint); }
+
+.chip-rule {
+  stroke: var(--line2);
+  stroke-width: 2;
+}
+
+.way {
+  fill: var(--bg2);
+  stroke: var(--line2);
+  stroke-width: 2;
+  animation: chip-way 3.2s ease-in-out infinite;
+}
+
+@keyframes chip-way {
+  0%, 62%, 100% { fill: var(--bg2); stroke: var(--line2); }
+  72%  { fill: var(--miss-dim); stroke: var(--miss); }
+  84%  { fill: var(--hit-dim);  stroke: var(--hit); }
+  94%  { fill: var(--bg2);      stroke: var(--amber); }
+}
+
+.chip-pulse {
+  r: 3px;
+  fill: var(--blue);
+  filter: drop-shadow(0 0 4px var(--blue));
+}
+
+.chip-pulse-b {
+  fill: var(--amber);
+  filter: drop-shadow(0 0 4px var(--amber));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip-svg, .chip-svg * { animation: none !important; }
+}
+
 /* ---------- steps ---------- */
 .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 20px; }
 .step { transition: none; }
@@ -615,8 +733,8 @@ td.win { color: var(--hit); }
 }
 
 @media (max-width: 900px) {
-  .hero { grid-template-columns: 1fr; }
-  .hero-visual { margin-top: 20px; }
+  .hero { justify-content: center; text-align: left; }
+  .hero-visual { margin-top: 20px; flex-basis: 100%; justify-content: center; }
   .hero h1 { font-size: 0.92rem; }
   h1 { font-size: 0.7rem; }
 }
