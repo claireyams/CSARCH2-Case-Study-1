@@ -60,11 +60,12 @@ function simulate(seq, blocks, blockSize, policy, readPolicy) {
   let stamp = 0;
   const steps = [];
 
-  // load-through: the CPU only waits for the requested word, so the block
-  // transfer term drops out of the penalty the CPU actually sees
+  // load-through: the CPU only waits for the requested word, which is forwarded
+  // straight to it, so neither the rest of the block transfer nor a final cache
+  // read is part of the penalty the CPU sees
   const missTime =
     readPolicy === 'lt'
-      ? CACHE_T + MEM_T + CACHE_T
+      ? CACHE_T + MEM_T
       : CACHE_T + MEM_T * blockSize + CACHE_T;
 
   for (let i = 0; i < seq.length; i++) {
