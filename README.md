@@ -26,7 +26,7 @@ compares LRU and MRU replacement policies on the same access sequence. It is a
 web-based GUI application built with vanilla HTML, CSS, and JavaScript, requiring no 
 build step or server.
 
-**Deployment Link:** [Deployment Link]
+**Deployment Link:** https://claireyams.github.io/CSARCH2-Case-Study-1/
 
 **Video Walkthrough:** [YouTube link]
 
