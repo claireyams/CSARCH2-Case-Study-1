@@ -44,7 +44,7 @@ CSArch_CaseStudy1/
 |-- README.md             | project documentation
 |-- assets/
 |-- images/
-|   |--screenshots/
+    |--screenshots/
 ```
 
 No build step or server is needed. Clone the repo and open `index.html`
