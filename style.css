@@ -73,6 +73,9 @@ body::before {
   animation: pixel-in 0.5s ease-out both;
 }
 
+/* simulator needs more room than the reading pages: sidebar + stat row + dual dies */
+.wrap-wide { max-width: 1560px; }
+
 @keyframes pixel-in {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -147,7 +150,7 @@ nav a:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--shadow); 
 nav a.active { border-color: var(--amber); color: var(--amber); }
 
 /* ---------- layout ---------- */
-.grid { display: grid; grid-template-columns: 310px 1fr; gap: 20px; }
+.grid { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 20px; }
 @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
 
 .card {
@@ -281,12 +284,16 @@ a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
 }
 
 /* ---------- stat tiles ---------- */
+/* 7 fixed tiles - stepped column counts keep the rows even instead of letting
+   auto-fit leave a ragged 6 + 1 with the ns values wrapping */
 .stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   margin-bottom: 20px;
 }
+@media (min-width: 700px)  { .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 1440px) { .stats { grid-template-columns: repeat(7, minmax(0, 1fr)); } }
 .stat {
   background: var(--panel);
   border: 3px solid var(--line);
@@ -374,9 +381,9 @@ a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
 .dielive { font-family: var(--mono); font-size: 1rem; letter-spacing: 0.02em; }
 
 .die { display: grid; gap: 10px; }
-/* side-by-side dies fold to 4 ways per row only when there isn't room for 8 */
-.dies.dual .ways { grid-template-columns: repeat(8, 1fr); }
-@media (max-width: 1500px) { .dies.dual .ways { grid-template-columns: repeat(4, 1fr); } }
+/* two dies share the row, so 8 ways across would squeeze each cell below the
+   width of a "B1023" label - always fold to 2 rows of 4 in side-by-side mode */
+.dies.dual .ways { grid-template-columns: repeat(4, 1fr); }
 
 .set {
   background: var(--panel2);
@@ -756,7 +763,12 @@ footer {
 }
 
 /* ---------- about page ---------- */
-.about-hero { padding: 32px 0 28px; }
+/* plain block flow - the flex row on .hero is for the index page's copy + chip
+   pair and would otherwise put the eyebrow, title and body text side by side */
+.about-hero {
+  display: block;
+  padding: 32px 0 28px;
+}
 .about-hero .eyebrow {
   font-family: var(--disp);
   font-size: 0.5rem;
@@ -766,7 +778,7 @@ footer {
   margin-bottom: 16px;
 }
 .about-hero h1 { font-size: 1.35rem; line-height: 1.6; margin-bottom: 6px; }
-.about-hero p { color: var(--muted); line-height: 1.55; font-size: 1.14rem; max-width: 740px; margin-top: 14px; }
+.about-hero p { color: var(--muted); line-height: 1.55; font-size: 1.14rem; max-width: 920px; margin-top: 14px; }
 .about-hero p strong { color: var(--amber); font-weight: 400; }
 
 .card p { font-size: 1.1rem; line-height: 1.55; }
