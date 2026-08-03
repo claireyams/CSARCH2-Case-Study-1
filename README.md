@@ -72,9 +72,11 @@ Timing per access:
 - Hit: `1 ns` (one cache access)
 - Miss, non-load-through: `1 + 10*B + 1 ns` — check the cache, load the block
   (B words) from memory into the cache, then read the word from the cache
-- Miss, load-through: `1 + 10 + 1 ns` — the requested word is fetched first and
-  passed on immediately, so the CPU waits for one word instead of the whole block
-  (the rest of the block finishes loading in the background)
+- Miss, load-through: `1 + (10 + 10*B) / 2 ns` — the requested word could be the first
+  or the last word to arrive from memory depending on its position in the block, so
+  the CPU's expected wait is the average of the best case (10 ns, word arrives first)
+  and worst case (10*B ns, word arrives last), on top of the cache check
+
 
 AMAT = total access time / number of accesses.
 
@@ -95,7 +97,7 @@ All samples below use the default configuration:
 With 2 sets, even blocks map to set 0 and odd blocks map to set 1, so each set acts
 like an 8-entry buffer for its half of the stream.
 
-Miss penalties at this block size: non-load-through = 162 ns, load-through = 12 ns.
+Miss penalties at this block size: non-load-through = 162 ns, load-through = 86 ns.
 Hits cost 1 ns.
 
 ### Test case a — Sequential
@@ -113,9 +115,9 @@ Expected output:
 | Policy | Read policy | Accesses | Hits | Misses | Hit rate | Miss rate | AMAT | Total time |
 |---|---|---|---|---|---|---|---|---|
 | LRU | non-load-through | 64 | 0 | 64 | 0.00% | 100.00% | 162.00 ns | 10,368 ns |
-| LRU | load-through | 64 | 0 | 64 | 0.00% | 100.00% | 12.00 ns | 768 ns |
+| LRU | load-through | 64 | 0 | 64 | 0.00% | 100.00% | 86.00 ns | 5,504 ns |
 | MRU | non-load-through | 64 | 16 | 48 | 25.00% | 75.00% | 121.75 ns | 7,792 ns |
-| MRU | load-through | 64 | 16 | 48 | 25.00% | 75.00% | 9.25 ns | 592 ns |
+| MRU | load-through | 64 | 16 | 48 | 25.00% | 75.00% | 64.75 ns | 4,144 ns |
 
 What you should see in the trace: under LRU, every access is a miss. Under MRU,
 the first pass is all misses, but on the second pass the early blocks of each set
@@ -137,9 +139,9 @@ Expected output:
 | Policy | Read policy | Accesses | Hits | Misses | Hit rate | Miss rate | AMAT | Total time |
 |---|---|---|---|---|---|---|---|---|
 | LRU | non-load-through | 160 | 16 | 144 | 10.00% | 90.00% | 145.90 ns | 23,344 ns |
-| LRU | load-through | 160 | 16 | 144 | 10.00% | 90.00% | 10.90 ns | 1,744 ns |
+| LRU | load-through | 160 | 16 | 144 | 10.00% | 90.00% | 10.90 ns | 12,400 ns |
 | MRU | non-load-through | 160 | 74 | 86 | 46.25% | 53.75% | 87.54 ns | 14,006 ns |
-| MRU | load-through | 160 | 74 | 86 | 46.25% | 53.75% | 6.91 ns | 1,106 ns |
+| MRU | load-through | 160 | 74 | 86 | 46.25% | 53.75% | 6.91 ns | 7,470 ns |
 
 What you should see in the trace: LRU's 16 hits all happen right after the direction
 reverses (the most recently used blocks are touched again immediately). MRU hits
@@ -154,10 +156,12 @@ Generated sequence: 64 random block addresses in the range 0–1023.
 
 Expected output with seed 42:
 
-| Policy | Read policy | Accesses | Hits | Misses | Hit rate | AMAT |
-|---|---|---|---|---|---|---|
-| LRU | non-load-through | 64 | 0 | 64 | 0.00% | 162.00 ns |
-| MRU | non-load-through | 64 | 1 | 63 | 1.56% | 159.48 ns |
+| Policy | Read policy | Accesses | Hits | Misses | Hit rate | Miss rate | AMAT | Total time |
+|---|---|---|---|---|---|---|---|---|
+| LRU | non-load-through | 64 | 0 | 64 | 0.00% | 100.00% | 162.00 ns | 10,368 ns |
+| LRU | load-through | 64 | 0 | 64 | 0.00% | 100.00% | 86.00 ns | 5,504 ns |
+| MRU | non-load-through | 64 | 1 | 63 | 1.56% | 98.44% | 159.48 ns | 10,207 ns |
+| MRU | load-through | 64 | 1 | 63 | 1.56% | 98.44% | 84.67 ns | 5,419 ns |
 
 Exact numbers depend on the seed, but both policies should land near 0% hits.
 The cache only covers 16 of the 1024 memory blocks (about 1.6%), so with 64
@@ -199,15 +203,17 @@ entirely by the miss penalty, not by replacement.
 ### Non-load-through vs load-through
 
 The read policy never changes which accesses hit or miss; it only changes what a
-miss costs. Under non-load-through the CPU waits for the entire block (162 ns at
-B = 16), while under load-through it waits only for the word it asked for (12 ns),
-so each miss is 10 x (B - 1) = 150 ns cheaper. The total effect is proportional to
-the miss count: in test case b it saves 144 x 150 = 21,600 ns under LRU
-(23,344 -> 1,744 ns) but 86 x 150 = 12,900 ns under MRU (14,006 -> 1,106 ns), so it
-helps most exactly where the replacement policy is doing worst. Note also that the
-load-through penalty does not depend on the block size at all, so larger blocks stop
-being a read-latency cost and only affect the hit rate — the opposite of
-non-load-through, where the 10 x B transfer term dominates everything else.
+miss costs. Under non-load-through the CPU waits for the entire block and then reads
+the word back out of the cache (162 ns at B = 16), while under load-through the CPU
+only waits for its one requested word — but since that word could be anywhere in the
+block, the expected wait is the average of the best case (10 ns, word arrives first)
+and worst case (10 x B ns, word arrives last): 1 + (10 + 10 x 16)/2 = 86 ns at B = 16,
+so each miss is 76 ns cheaper. The total effect is proportional to the miss count: in
+test case b it saves 144 x 76 = 10,944 ns under LRU (23,344 -> 12,400 ns) but
+86 x 76 = 6,536 ns under MRU (14,006 -> 7,470 ns), so it helps most exactly where the
+replacement policy is doing worst. Note that unlike non-load-through, the
+load-through penalty still scales with block size — just more gently, since it grows
+with the average position of the word in the block instead of the full transfer.
 
 ### Conclusion for Machine 9
 
