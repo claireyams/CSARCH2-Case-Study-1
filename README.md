@@ -2,7 +2,7 @@
 <img src="images/dlsu_logo.png" alt="De La Salle University Logo" width="150"/>
 </p>
 
-# Case Study Project #1 — README
+# Case Study Project #1 - README
 
 ### Cache Memory Machine: 8-Way BSA + LRU vs. 8-Way BSA + MRU
 
@@ -28,7 +28,7 @@ build step or server.
 
 **Deployment Link:** https://claireyams.github.io/CSARCH2-Case-Study-1/
 
-**Video Walkthrough:** [YouTube link]
+**Video Walkthrough:** https://youtu.be/Xaqb3koRPbc?si=u1FyQ_h1em3eIj3h
 
 ---
 
