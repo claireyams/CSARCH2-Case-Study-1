@@ -28,7 +28,7 @@ build step or server.
 
 **Deployment Link:** https://claireyams.github.io/CSARCH2-Case-Study-1/
 
-**Video Walkthrough:** https://youtu.be/Xaqb3koRPbc?si=u1FyQ_h1em3eIj3h
+**Video Walkthrough:** https://youtu.be/La1JZhkZk0o?si=0WEaUhh5fg33Ij3T
 
 ---
 
