@@ -64,7 +64,7 @@ function simulate(seq, blocks, blockSize, policy, readPolicy) {
   // word plus the cache access that delivers it, not for the whole block transfer
   const missTime =
     readPolicy === 'lt'
-      ? CACHE_T + MEM_T + CACHE_T
+      ? CACHE_T + (MEM_T + MEM_T * blockSize) / 2
       : CACHE_T + MEM_T * blockSize + CACHE_T;
 
   for (let i = 0; i < seq.length; i++) {
