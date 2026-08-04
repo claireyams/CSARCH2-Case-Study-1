@@ -30,6 +30,8 @@ build step or server.
 
 **Video Walkthrough:** https://youtu.be/La1JZhkZk0o?si=0WEaUhh5fg33Ij3T
 
+**Screenshots:** [View the full screenshot compilation](./%5BCSARCH2%5D%20S01-Group%207%20Machine%209%20Screenshots.pdf) - or view individual screenshot images at `images/screenshots`
+
 ---
 
 ## Project files
